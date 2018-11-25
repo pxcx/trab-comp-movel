@@ -28,7 +28,7 @@ def send_error(error):
 
 @app.route('/', methods=['GET'])
 def index():
-	return 'Ok!'
+	return 'API Ok!'
 
 @app.route('/user', methods=['GET'])
 def call_get_all_users():
