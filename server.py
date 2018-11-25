@@ -54,4 +54,4 @@ def call_add_user():
 	api = User(mongo)
 	return api.add()
 
-app.run(debug=True)
+app.run(debug=False)
