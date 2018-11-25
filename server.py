@@ -22,6 +22,10 @@ def send_error(error):
 		msg = 'O campo ' + str(error) + ' é obrigatório'
 	return jsonify({'result' : 	'error' , 'reason': msg})
 
+@app.route('/', methods=['GET'])
+def index():
+	return 'Ok!'
+
 @app.route('/user', methods=['GET'])
 def call_get_all_users():
 	api = User(mongo)
