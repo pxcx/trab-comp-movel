@@ -1,6 +1,6 @@
 from flask import jsonify, request
 from flask_pymongo import ObjectId
-from flask_bcrypt import bcrypt
+from werkzeug.security import generate_password_hash, check_password_hash
 
 class User:
 	# construtor
@@ -60,7 +60,7 @@ class User:
 
 		razao_social = request.json['razao_social']
 		email = request.json['email']
-		senha = bcrypt.generate_password_hash(request.json['senha'])
+		senha = generate_password_hash(request.json['senha'])
 		telefone = request.json['telefone']
 		endereco_rua = request.json['endereco_rua']
 		endereco_num = request.json['endereco_num']
