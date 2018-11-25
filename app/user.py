@@ -46,10 +46,11 @@ class User:
 		senha = request.json['senha']
 
 		output = {'login': False, 'message': 'Combinação de usuário e senha incorreta.'}
-		if users.count({'email': email, 'senha': senha }) >= 1:
-			user = users.find_one({'email': email, 'senha': senha })
-			output = {'login': True, 'user': self.format_user(user)}
-
+		if users.count({'email': email}) >= 1:
+			user = users.find_one({'email': email})
+			if check_password_hash(user['senha'], senha):
+				output = {'login': True, 'user': self.format_user(user)}
+				
 		return jsonify({'result' : output})
 			
 	# cadastra um usuario
