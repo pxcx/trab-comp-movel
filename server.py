@@ -2,13 +2,16 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 from flask_pymongo import PyMongo
 from app.user import User
+import urllib.parse
 
 app = Flask('MyMedsAPI')
 CORS(app)
 
 app.config['MONGO_DBNAME'] = 'mymeds'
-app.config['MONGO_URI'] = 'mongodb://127.0.0.1:27017/mymeds'
-
+#app.config['MONGO_URI'] = 'mongodb://127.0.0.1:27017/mymeds'
+username = urllib.parse.quote_plus('heroku_t00ws3j1')
+password = urllib.parse.quote_plus('ZSEfvcx@1425')
+app.config['MONGO_URI'] = 'mongodb://%s:%s@ds147592.mlab.com:47592/heroku_t00ws3j1' % (username, password)
 mongo = PyMongo(app)
 
 # mensagem de erro padrao
