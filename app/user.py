@@ -1,6 +1,6 @@
 from flask import jsonify, request
 from flask_pymongo import ObjectId
-from flask_bcrypt import Bcrypt
+from flask_bcrypt import bcrypt
 
 class User:
 	# construtor
