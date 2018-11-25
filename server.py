@@ -3,15 +3,19 @@ from flask_cors import CORS
 from flask_pymongo import PyMongo
 from app.user import User
 import urllib.parse
+import pymongo
 
 app = Flask('MyMedsAPI')
 CORS(app)
 
-app.config['MONGO_DBNAME'] = 'mymeds'
-#app.config['MONGO_URI'] = 'mongodb://127.0.0.1:27017/mymeds'
+# MONGODB LOCAL
+# app.config['MONGO_DBNAME'] = 'mymeds'
+# app.config['MONGO_URI'] = 'mongodb://127.0.0.1:27017/mymeds'
+# MLAB
 username = urllib.parse.quote_plus('pxcx')
 password = urllib.parse.quote_plus('ci1425')
 app.config['MONGO_URI'] = 'mongodb://%s:%s@ds147592.mlab.com:47592/heroku_t00ws3j1' % (username, password)
+
 mongo = PyMongo(app)
 
 # mensagem de erro padrao
@@ -54,4 +58,4 @@ def call_add_user():
 	api = User(mongo)
 	return api.add()
 
-#app.run(debug=True)
+app.run(debug=True)
