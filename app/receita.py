@@ -27,6 +27,17 @@ class Receita:
 			output = self.format(receita)
 
 		return jsonify({'result' : output})
+
+	# retorna uma receita por id de usuario
+	def get_by_user(self, user):
+		receitas = self.mongo.db.receita
+
+		output = 'Nenhuma receita encontrada'
+		if receitas.count({'usuario': ObjectId(user) }) >= 1:
+			receita = receitas.find_one({'usuario': ObjectId(user) })
+			output = self.format(receita)
+
+		return jsonify({'result' : output})
 			
 	# remove uma receita
 	def delete(self, id):

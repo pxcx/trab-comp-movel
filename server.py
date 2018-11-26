@@ -2,8 +2,8 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 from flask_pymongo import PyMongo
 from app.user import User
+from app.receita import Receita
 import urllib.parse
-import pymongo
 
 app = Flask('MyMedsAPI')
 CORS(app)
@@ -30,6 +30,7 @@ def send_error(error):
 def index():
 	return 'API Ok!'
 
+# rotas usuario
 @app.route('/user', methods=['GET'])
 def call_get_all_users():
 	api = User(mongo)
@@ -57,5 +58,31 @@ def call_login_user():
 def call_add_user():
 	api = User(mongo)
 	return api.add()
+
+# rotas receita
+@app.route('/receita', methods=['GET'])
+def call_get_all_receitas(user):
+	api = Receita(mongo)
+	return api.get_all(), 200
+
+@app.route('/receita/<user>', methods=['GET'])
+def call_get_receita_by_user(user):
+	api = Receita(mongo)
+	return api.get_by_user(), 200
+
+@app.route('/receita/<id>', methods=['GET'])
+def call_get_receita_by_id(id):
+	api = Receita(mongo)
+	return api.get_by_id(id), 200
+
+@app.route('/receita/<id>', methods=['DELETE'])
+def call_delete_user(id):
+	api = Receita(mongo)
+	return api.delete(), 200
+
+@app.route('/receita', methods=['POST'])
+def call_add_user():
+	api = Receita(mongo)
+	return api.add(), 200
 
 #app.run(debug=True)
