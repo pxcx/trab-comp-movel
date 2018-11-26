@@ -32,7 +32,7 @@ class Receita:
 	def get_by_user(self, user):
 		receitas = self.mongo.db.receita
 
-		output = 'Nenhuma receita encontrada'
+		output = 'Nenhuma receita encontrada pra este usuário'
 		if receitas.count({'usuario': ObjectId(user) }) >= 1:
 			receita = receitas.find_one({'usuario': ObjectId(user) })
 			output = self.format(receita)
@@ -55,18 +55,18 @@ class Receita:
 	def add(self):
 		receitas = self.mongo.db.receita
 
-		descricao = request.json['descricao']
-		data = request.json['data']
-		usuario = ObjectId(request.json['user_id'])
-		obs = request.json['obs']
+		descricao = request.form['descricao']
+		data = request.form['data']
+		usuario = ObjectId(request.form['user_id'])
+		obs = request.form['obs']
 		# imagem
-		upload = request.files['file']
-        if upload and allowed_file(upload.filename):
-            filename = secure_filename(upload.filename)
-            upload.save(os.path.join('../files/', filename))
-            imagem = url_for('uploaded_file', filename=filename)
-        else:
-            imagem = False
+		upload = request.files['receita']
+		if upload:
+			filename = secure_filename(upload.filename)
+			upload.save(os.path.join('./files/', filename))
+			imagem = request.base_url.replace('receita','')+'files/'+filename
+		else:
+			imagem = False
 
 		receita_id = receitas.insert({
 			'descricao': descricao, 
@@ -74,7 +74,7 @@ class Receita:
 			'usuario': usuario,
 			'obs' : obs,
 			'propostas': [], 
-			'imagem': imagem
+			'receita': imagem
 		})
 
 		new = receitas.find_one({'_id': receita_id })
@@ -87,6 +87,6 @@ class Receita:
 			'descricao' : info['descricao'], 
 			'data' : info['data'], 
 			'obs' : info['obs'],
-			'imagem' : info['imagem']
+			'receita' : info['receita']
 		}
 		return output

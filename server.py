@@ -61,14 +61,14 @@ def call_add_user():
 
 # rotas receita
 @app.route('/receita', methods=['GET'])
-def call_get_all_receitas(user):
+def call_get_all_receitas():
 	api = Receita(mongo)
 	return api.get_all(), 200
 
-@app.route('/receita/<user>', methods=['GET'])
+@app.route('/receita/user/<user>', methods=['GET'])
 def call_get_receita_by_user(user):
 	api = Receita(mongo)
-	return api.get_by_user(), 200
+	return api.get_by_user(user), 200
 
 @app.route('/receita/<id>', methods=['GET'])
 def call_get_receita_by_id(id):
@@ -76,13 +76,13 @@ def call_get_receita_by_id(id):
 	return api.get_by_id(id), 200
 
 @app.route('/receita/<id>', methods=['DELETE'])
-def call_delete_user(id):
+def call_delete_receita(id):
 	api = Receita(mongo)
 	return api.delete(), 200
 
 @app.route('/receita', methods=['POST'])
-def call_add_user():
+def call_add_receita():
 	api = Receita(mongo)
 	return api.add(), 200
 
-#app.run(debug=True)
+app.run(debug=True)
