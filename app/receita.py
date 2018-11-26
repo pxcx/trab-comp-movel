@@ -1,5 +1,7 @@
-from flask import jsonify, request
+from flask import jsonify, request, url_for
+from werkzeug.utils import secure_filename
 from flask_pymongo import ObjectId
+import os
 
 class Receita:
 	# construtor
@@ -46,7 +48,14 @@ class Receita:
 		data = request.json['data']
 		usuario = ObjectId(request.json['user_id'])
 		obs = request.json['obs']
-		# imagens ??
+		# imagem
+		upload = request.files['file']
+        if upload and allowed_file(upload.filename):
+            filename = secure_filename(upload.filename)
+            upload.save(os.path.join('../files/', filename))
+            imagem = url_for('uploaded_file', filename=filename)
+        else:
+            imagem = False
 
 		receita_id = receitas.insert({
 			'descricao': descricao, 
@@ -54,7 +63,7 @@ class Receita:
 			'usuario': usuario,
 			'obs' : obs,
 			'propostas': [], 
-			'imagens': []
+			'imagem': imagem
 		})
 
 		new = receitas.find_one({'_id': receita_id })
@@ -66,6 +75,7 @@ class Receita:
 			'id' : str(info['_id']),
 			'descricao' : info['descricao'], 
 			'data' : info['data'], 
-			'obs' : info['obs']
+			'obs' : info['obs'],
+			'imagem' : info['imagem']
 		}
 		return output
