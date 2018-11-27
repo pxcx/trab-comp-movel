@@ -33,18 +33,27 @@ def index():
 # rotas usuario
 @app.route('/user', methods=['GET'])
 def call_get_all_users():
-	api = User(mongo)
-	return api.get_all(), 200
+	try:
+		api = User(mongo)
+		return api.get_all(), 200
+	except Exception as e:
+		return send_error(e), 500
 
 @app.route('/user/<id>', methods=['GET'])
 def call_get_user_by_id(id):
-	api = User(mongo)
-	return api.get_by_id(id), 200
+	try:
+		api = User(mongo)
+		return api.get_by_id(id), 200
+	except Exception as e:
+		return send_error(e), 500
 
 @app.route('/user/<id>', methods=['DELETE'])
 def call_delete_user(id):
-	api = User(mongo)
-	return api.delete(), 200
+	try:
+		api = User(mongo)
+		return api.delete(), 200
+	except Exception as e:
+		return send_error(e), 500
 
 @app.route('/login', methods=['POST'])
 def call_login_user():
@@ -56,8 +65,11 @@ def call_login_user():
 
 @app.route('/user', methods=['POST'])
 def call_add_user():
-	api = User(mongo)
-	return api.add()
+	try:
+		api = User(mongo)
+		return api.add()
+	except Exception as e:
+		return send_error(e), 500
 
 # rotas receita
 @app.route('/receita', methods=['GET'])
