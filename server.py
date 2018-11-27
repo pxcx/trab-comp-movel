@@ -74,28 +74,43 @@ def call_add_user():
 # rotas receita
 @app.route('/receita', methods=['GET'])
 def call_get_all_receitas():
-	api = Receita(mongo)
-	return api.get_all(), 200
+	try:
+		api = Receita(mongo)
+		return api.get_all(), 200
+	except Exception as e:
+		return send_error(e), 500
 
 @app.route('/receita/user/<user>', methods=['GET'])
 def call_get_receita_by_user(user):
-	api = Receita(mongo)
-	return api.get_by_user(user), 200
+	try:
+		api = Receita(mongo)
+		return api.get_by_user(user), 200
+	except Exception as e:
+		return send_error(e), 500
 
 @app.route('/receita/<id>', methods=['GET'])
 def call_get_receita_by_id(id):
-	api = Receita(mongo)
-	return api.get_by_id(id), 200
+	try:
+		api = Receita(mongo)
+		return api.get_by_id(id), 200
+	except Exception as e:
+		return send_error(e), 500
 
 @app.route('/receita/<id>', methods=['DELETE'])
 def call_delete_receita(id):
-	api = Receita(mongo)
-	return api.delete(id), 200
+	try:
+		api = Receita(mongo)
+		return api.delete(id), 200
+	except Exception as e:
+		return send_error(e), 500
 
 @app.route('/receita', methods=['POST'])
 def call_add_receita():
-	api = Receita(mongo)
-	return api.add(), 200
+	try:
+		api = Receita(mongo)
+		return api.add(), 200
+	except Exception as e:
+		return send_error(e), 500
 
 @app.route('/files/<filename>')
 def uploaded_file(filename):
