@@ -97,4 +97,8 @@ def call_add_receita():
 	api = Receita(mongo)
 	return api.add(), 200
 
+@app.route('/files/<filename>')
+def uploaded_file(filename):
+	return send_from_directory('./files', filename)
+
 #app.run(debug=True)
