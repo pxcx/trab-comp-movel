@@ -90,7 +90,7 @@ def call_get_receita_by_id(id):
 @app.route('/receita/<id>', methods=['DELETE'])
 def call_delete_receita(id):
 	api = Receita(mongo)
-	return api.delete(), 200
+	return api.delete(id), 200
 
 @app.route('/receita', methods=['POST'])
 def call_add_receita():
