@@ -85,4 +85,4 @@ def call_add_receita():
 	api = Receita(mongo)
 	return api.add(), 200
 
-app.run(debug=True)
+#app.run(debug=True)
