@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, send_from_directory
 from flask_cors import CORS
 from flask_pymongo import PyMongo
 from app.user import User
@@ -99,6 +99,6 @@ def call_add_receita():
 
 @app.route('/files/<filename>')
 def uploaded_file(filename):
-	return send_from_directory('./files', filename)
+	return send_from_directory('files/', filename)
 
 #app.run(debug=True)
