@@ -88,5 +88,6 @@ class Receita:
 			'data' : info['data'], 
 			'obs' : info['obs'],
 			'receita' : info['receita']
+			'usuario' : str(info['usuario'])
 		}
 		return output
