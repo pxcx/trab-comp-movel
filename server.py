@@ -13,7 +13,7 @@ CORS(app)
 # app.config['MONGO_URI'] = 'mongodb://127.0.0.1:27017/mymeds'
 # MLAB
 username = urllib.parse.quote_plus('pxcx')
-password = urllib.parse.quote_plus('ci1425')
+password = urllib.parse.quote_plus('')
 app.config['MONGO_URI'] = 'mongodb://%s:%s@ds147592.mlab.com:47592/heroku_t00ws3j1' % (username, password)
 
 mongo = PyMongo(app)
