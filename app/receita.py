@@ -32,10 +32,10 @@ class Receita:
 	def get_by_user(self, user):
 		receitas = self.mongo.db.receita
 
-		output = 'Nenhuma receita encontrada pra este usuário'
+		output = []
 		if receitas.count({'usuario': ObjectId(user) }) >= 1:
-			receita = receitas.find_one({'usuario': ObjectId(user) })
-			output = self.format(receita)
+			for receita in receitas.find({'usuario': ObjectId(user)}):
+				output.append(self.format(receita))
 
 		return jsonify({'result' : output})
 			
@@ -73,7 +73,6 @@ class Receita:
 			'data': data, 
 			'usuario': usuario,
 			'obs' : obs,
-			'propostas': [], 
 			'receita': imagem
 		})
 

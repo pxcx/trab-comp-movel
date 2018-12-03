@@ -3,6 +3,7 @@ from flask_cors import CORS
 from flask_pymongo import PyMongo
 from app.user import User
 from app.receita import Receita
+from app.proposta import Proposta
 import urllib.parse
 
 app = Flask('MyMedsAPI')
@@ -13,7 +14,7 @@ CORS(app)
 # app.config['MONGO_URI'] = 'mongodb://127.0.0.1:27017/mymeds'
 # MLAB
 username = urllib.parse.quote_plus('pxcx')
-password = urllib.parse.quote_plus('')
+password = urllib.parse.quote_plus('ci1425')
 app.config['MONGO_URI'] = 'mongodb://%s:%s@ds147592.mlab.com:47592/heroku_t00ws3j1' % (username, password)
 
 mongo = PyMongo(app)
@@ -21,7 +22,6 @@ mongo = PyMongo(app)
 # mensagem de erro padrao
 def send_error(error):
 	msg = str(error)
-	print(type(error), type(error) is 'KeyError')
 	if type(error) is KeyError:
 		msg = 'O campo ' + str(error) + ' é obrigatório'
 	return jsonify({'result' : 	'error' , 'reason': msg})
@@ -108,6 +108,30 @@ def call_delete_receita(id):
 def call_add_receita():
 	try:
 		api = Receita(mongo)
+		return api.add(), 200
+	except Exception as e:
+		return send_error(e), 500
+
+@app.route('/proposta/<receita>', methods=['GET'])
+def call_get_proposta(receita):
+	try:
+		api = Proposta(mongo)
+		return api.get(receita), 200
+	except Exception as e:
+		return send_error(e), 500
+
+@app.route('/proposta/<id>', methods=['DELETE'])
+def call_delete_proposta(id):
+	try:
+		api = Proposta(mongo)
+		return api.delete(id), 200
+	except Exception as e:
+		return send_error(e), 500
+
+@app.route('/proposta', methods=['POST'])
+def call_add_proposta():
+	try:
+		api = Proposta(mongo)
 		return api.add(), 200
 	except Exception as e:
 		return send_error(e), 500
